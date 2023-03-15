@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (Context.Session.GetObject<Usuario>("USUARIO") != null)
+{
+    <p>Estas conectado</p>
+}
+else
+{
+    <form method="post">
+        <input type="text" name="nombre" />
+        <input type="text" name="contrasenia" />
+        <button>Enviar</button>
+    </form>
+}
+

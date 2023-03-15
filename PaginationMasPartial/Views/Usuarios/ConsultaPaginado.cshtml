@@ -1,0 +1,44 @@
+﻿@model List<Articulo>
+
+@{
+    int numregistros = 0;
+    int numpagina = 1;
+    int registrospagina = 0;
+
+    if (ViewData["TOTAL"] != null)
+    {
+        numregistros = (int)ViewData["TOTAL"];
+    }
+
+    if (ViewData["REGISTROPAGINA"] != null)
+    {
+        registrospagina = (int)ViewData["REGISTROPAGINA"];
+    }
+}
+
+@if (numregistros > 0 && Model == null)
+{
+    <form method="post">
+        <select name="registrospagina">
+            @for (int i = 1; i < numregistros; i++)
+            {
+                    <option value="@i">@i</option>
+            }
+        </select>
+        <button>Enviar</button>
+    </form>
+}
+
+@if (Model != null)
+{
+    @for (int i=1; i <= numregistros; i+=registrospagina)
+    {
+        <a asp-action="ConsultaPaginado" asp-controller="Usuarios" asp-route-posicion="@i" asp-route-registrospagina="@registrospagina">PAGINA @numpagina</a>
+        numpagina++;
+    }
+    @foreach (Articulo art in Model)
+    {
+        <p>@art.Nombre</p>
+    }
+}
+
